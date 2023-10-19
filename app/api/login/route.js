@@ -8,7 +8,7 @@ export async function POST(request) {
 
   try {
     const response = await axios.post(
-      "http://express-social-website.vercel.app/login",
+      "https://express-social-website.vercel.app/login",
       {
         username: username,
         password: password,
