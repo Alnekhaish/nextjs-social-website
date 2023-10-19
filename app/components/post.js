@@ -1,29 +1,81 @@
-import { Avatar } from "@rewind-ui/core";
+"use client";
+import { Avatar, Button, Card, Modal } from "@rewind-ui/core";
 import { BsChat } from "react-icons/bs";
 import { AiOutlineRetweet, AiOutlineHeart } from "react-icons/ai";
+import { useState } from "react";
+import ReplayModal from "./replayModal";
+import { getDateDifference } from "../utils/helper";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
-export default function Post() {
+export default function Post({ children, post }) {
+  const [open, setOpen] = useState(false);
+  const [cookies] = useCookies("token");
+
+  async function handleRetweet(e) {
+    e.preventDefault();
+  }
+  async function handleLike(e) {
+    e.preventDefault();
+    console.log(cookies.token);
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/posts/${post._id}/like`,
+        {},
+        {
+          headers: {
+            Authorization: `bearer ${cookies.token}`,
+          },
+        },
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
-    <div className="flex flex-col gap-y-3">
-      <div className="flex items-center gap-x-3">
-        <Avatar />
-        <h1>name</h1>
-        <h1 className="text-sm font-light">@account - 12m</h1>
+    <>
+      <ReplayModal post={post} open={open} onClose={() => setOpen(false)} />
+      <div className="flex flex-col gap-y-3">
+        <div className="flex items-center gap-x-3">
+          <Avatar src={post.author.profile.avatar} />
+          <h1>
+            {`${post.author.profile.first_name}  ${post.author.profile.last_name}`}
+          </h1>
+          <h1 className="text-sm font-light">
+            @{post.author.username} - {getDateDifference(post.createdAt)}
+          </h1>
+        </div>
+        <h1 className="ml-16 w-full text-black">{post.content}</h1>
+        <div className="ml-3 flex justify-around">
+          <Button
+            icon
+            color=""
+            className="border-none active:border-none"
+            onClick={() => setOpen(true)}
+          >
+            <BsChat className="hover:text-primary" size={20} />
+          </Button>
+          <Button
+            icon
+            color=""
+            className="border-none active:border-none"
+            onClick={handleRetweet}
+          >
+            <AiOutlineRetweet className="hover:text-primary" size={20} />
+          </Button>
+          <Button
+            icon
+            color=""
+            className="border-none active:border-none"
+            onClick={handleLike}
+          >
+            <AiOutlineHeart className="hover:text-red-500" size={20} />
+          </Button>
+        </div>
+        <div className="mt-3 border-l-2">{children}</div>
       </div>
-      <h1 className="mx-auto text-start text-black md:ml-16 md:w-4/6 lg:w-11/12">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </h1>
-      <div className="ml-3 flex justify-around">
-        <BsChat className="hover:text-primary" size={20} />
-        <AiOutlineRetweet className="hover:text-primary" size={20} />
-        <AiOutlineHeart className="hover:text-primary" size={20} />
-      </div>
-    </div>
+    </>
   );
 }

@@ -1,22 +1,51 @@
 import { Card } from "@rewind-ui/core";
 import Post from "./post";
+import { cookies } from "next/headers";
+import Comment from "@/app/components/comment";
+import { redirect } from "next/navigation";
 
-export default function Timeline() {
+async function getUserTimeline() {
+  const token = cookies().get("token");
+
+  if (token) {
+    try {
+      const res = await fetch("http://localhost:8000/users/timeline", {
+        method: "GET",
+        headers: { Authorization: `bearer ${token.value}` },
+      });
+      const data = await res.json();
+      return data.timeline;
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    redirect("/login");
+  }
+}
+
+export default async function Timeline() {
+  const timelineData = await getUserTimeline();
+
   return (
     <div>
-      <Card className="mb-10" shadow="none" radius="md" size="lg">
-        <Card.Body>
-          <Post />
-        </Card.Body>
-        <Card.Body>
-          <Post />
-        </Card.Body>
-        <Card.Body>
-          <Post />
-        </Card.Body>
-        <Card.Body>
-          <Post />
-        </Card.Body>
+      <Card shadow="none" radius="md" size="lg">
+        {timelineData.map((item) => {
+          if (item.type === "post") {
+            return (
+              <Card.Body key={item._id}>
+                <Post post={item} />
+              </Card.Body>
+            );
+          } else {
+            return (
+              <Card.Body key={item._id}>
+                <Post post={item.post}>
+                  <Comment comment={item} />
+                </Post>
+              </Card.Body>
+            );
+          }
+        })}
       </Card>
     </div>
   );

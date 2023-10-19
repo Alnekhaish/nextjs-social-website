@@ -6,8 +6,10 @@ import { useState } from "react";
 import { AiFillHome, AiTwotoneSetting } from "react-icons/ai";
 import { BiSolidUser, BiHash } from "react-icons/bi";
 import { HiMiniInboxArrowDown, HiMoon } from "react-icons/hi2";
+import { usePathname } from "next/navigation";
 
 export default function LogoSidebar({ children }) {
+  const pathname = usePathname();
   const [expanded, setExpanded] = useState(true);
   const [mobile, setMobile] = useState(false);
   const sidebar = useSidebar();
@@ -31,31 +33,50 @@ export default function LogoSidebar({ children }) {
           <Sidebar.Head.Toggle className="" />
         </Sidebar.Head>
         <Sidebar.Nav className="flex h-full flex-row items-center">
-          <Sidebar.Nav.Section className="gap-3 w-full">
+          <Sidebar.Nav.Section className="w-full gap-3">
             <Sidebar.Nav.Section.Item
               icon={<AiFillHome size={25} />}
               label="Home"
-              href="#"
-              active
-              className="text-xl text-primary"
+              href="/home"
+              active={pathname === "/home"}
+              className={
+                pathname === "/home"
+                  ? "text-xl text-primary"
+                  : "text-xl hover:text-primary"
+              }
             />
             <Sidebar.Nav.Section.Item
               icon={<BiSolidUser size={20} />}
               label="Profile"
-              href="#"
-              className="text-xl hover:text-primary"
+              href="/profile"
+              active={pathname === "/profile"}
+              className={
+                pathname === "/profile"
+                  ? "text-xl text-primary"
+                  : "text-xl hover:text-primary"
+              }
             />
             <Sidebar.Nav.Section.Item
               icon={<HiMiniInboxArrowDown size={20} />}
               label="Messages"
-              href="#"
-              className="text-xl hover:text-primary"
+              href="/messages"
+              active={pathname === "/messages"}
+              className={
+                pathname === "/messages"
+                  ? "text-xl text-primary"
+                  : "text-xl hover:text-primary"
+              }
             />
             <Sidebar.Nav.Section.Item
               icon={<BiHash size={20} />}
               label="Trend"
-              href="#"
-              className="text-xl hover:text-primary"
+              href="/trend"
+              active={pathname === "/trend"}
+              className={
+                pathname === "/trend"
+                  ? "text-xl text-primary"
+                  : "text-xl hover:text-primary"
+              }
             />
           </Sidebar.Nav.Section>
         </Sidebar.Nav>
@@ -106,7 +127,7 @@ export default function LogoSidebar({ children }) {
           </Button>
         </header>
 
-        <div className="h-full w-full p-8">{children}</div>
+        <div className="h-screen w-full p-8">{children}</div>
       </main>
     </div>
   );

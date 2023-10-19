@@ -7,8 +7,8 @@ export default function Messages() {
   return (
     <div className="h-screen">
       <Sidebar>
-        <div className="grid h-screen divide-x lg:grid-cols-6 lg:gap-x-10">
-          <div className="no-scrollbar flex h-screen flex-col gap-y-2.5 overflow-x-visible overflow-y-scroll lg:col-span-2">
+        <div className="grid h-full divide-x lg:grid-cols-6 lg:gap-x-10">
+          <div className="no-scrollbar flex h-full flex-col gap-y-2.5 overflow-x-visible overflow-y-scroll lg:col-span-2">
             <div className="sticky top-0 z-50">
               <SearchBar />
             </div>
@@ -41,7 +41,6 @@ export default function Messages() {
           </div>
           <div className="col-span-4 hidden gap-y-3 lg:flex lg:flex-col">
             <NewMessage />
-
           </div>
         </div>
       </Sidebar>

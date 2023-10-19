@@ -28,7 +28,6 @@ export default function Login() {
             Enter your email and password to login
           </h1>
         </div>
-
         <LoginForm />
       </div>
     </div>
