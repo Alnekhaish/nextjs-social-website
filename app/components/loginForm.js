@@ -24,10 +24,13 @@ export default function LoginForm() {
   async function onSubmit(formData) {
     setIsSubmitting(true);
     try {
-      const response = await axios.post("http://192.168.66.2:3000/api/login", {
-        username: formData.username,
-        password: formData.password,
-      });
+      const response = await axios.post(
+        "express-social-website.vercel.app/api/login",
+        {
+          username: formData.username,
+          password: formData.password,
+        },
+      );
 
       if (response.status === 200) {
         router.push("/home");
