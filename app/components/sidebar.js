@@ -6,7 +6,7 @@ import { useState } from "react";
 import { AiFillHome, AiTwotoneSetting } from "react-icons/ai";
 import { BiSolidUser, BiHash } from "react-icons/bi";
 import { HiMiniInboxArrowDown, HiMoon } from "react-icons/hi2";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 
 export default function LogoSidebar({ children }) {
   const pathname = usePathname();
@@ -82,15 +82,19 @@ export default function LogoSidebar({ children }) {
         </Sidebar.Nav>
         <Sidebar.Footer>
           <div className="flex items-center justify-center gap-3 text-sm">
-            <HiMoon size={20} />
-            <AiTwotoneSetting size={20} />
+            <Button icon onClick={() => redirect("/setting")}>
+              {" "}
+              <HiMoon size={20} />
+              <AiTwotoneSetting size={20} />
+            </Button>
           </div>
         </Sidebar.Footer>
       </Sidebar>
 
       <main
-        className={`flex w-full transform flex-col items-center text-slate-700 transition-all duration-100 ${expanded ? "md:ml-64" : "md:ml-20"
-          }`}
+        className={`flex w-full transform flex-col items-center text-slate-700 transition-all duration-100 ${
+          expanded ? "md:ml-64" : "md:ml-20"
+        }`}
       >
         {mobile && (
           <Overlay
