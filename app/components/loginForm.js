@@ -25,7 +25,7 @@ export default function LoginForm() {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        "http://express-social-website.vercel.app/api/login",
+        "https://nextjs-social-website.vercel.app/api/login",
         {
           username: formData.username,
           password: formData.password,
