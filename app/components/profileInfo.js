@@ -2,9 +2,28 @@
 import { Card, Avatar, Button } from "@rewind-ui/core";
 import { useState } from "react";
 import EditProfileModal from "./editProfileModal";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
-export default function Profile({ user }) {
+export default function Profile({ user, other }) {
   const [open, setOpen] = useState(false);
+  const [cookies] = useCookies("token");
+
+  async function follow(username) {
+    try {
+      const response = await axios.post(
+        `https://express-social-website.vercel.app/users/follow`,
+        { targetUserName: username },
+        {
+          headers: {
+            Authorization: `bearer ${cookies.token}`,
+          },
+        },
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -26,14 +45,25 @@ export default function Profile({ user }) {
                 </h1>
                 <h1 className="text-gray-500">@{user.username}</h1>
               </div>
-              <Button
-                className="border-primary font-semibold text-primary"
-                tone="outline"
-                color=""
-                onClick={() => setOpen(true)}
-              >
-                Edit Profile
-              </Button>
+              {other ? (
+                <Button
+                  className="border-primary font-semibold text-primary"
+                  tone="outline"
+                  color=""
+                  onClick={() => follow(user.username)}
+                >
+                  Follow
+                </Button>
+              ) : (
+                <Button
+                  className="border-primary font-semibold text-primary"
+                  tone="outline"
+                  color=""
+                  onClick={() => setOpen(true)}
+                >
+                  Edit Profile
+                </Button>
+              )}
             </div>
             <h1 className="mt-4">{user.profile.bio}</h1>
           </div>

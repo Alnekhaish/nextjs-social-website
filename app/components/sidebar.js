@@ -6,13 +6,14 @@ import { useState } from "react";
 import { AiFillHome, AiTwotoneSetting } from "react-icons/ai";
 import { BiSolidUser, BiHash } from "react-icons/bi";
 import { HiMiniInboxArrowDown, HiMoon } from "react-icons/hi2";
-import { redirect, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function LogoSidebar({ children }) {
   const pathname = usePathname();
   const [expanded, setExpanded] = useState(true);
   const [mobile, setMobile] = useState(false);
   const sidebar = useSidebar();
+  const router = useRouter();
 
   return (
     <div className="relative flex h-full min-h-[35rem] w-full flex-row">
@@ -82,9 +83,13 @@ export default function LogoSidebar({ children }) {
         </Sidebar.Nav>
         <Sidebar.Footer>
           <div className="flex items-center justify-center gap-3 text-sm">
-            <Button icon onClick={() => redirect("/setting")}>
-              {" "}
-              <HiMoon size={20} />
+            <HiMoon size={20} />
+            <Button
+              color=""
+              tone="transparent"
+              icon
+              onClick={() => router.push("/setting")}
+            >
               <AiTwotoneSetting size={20} />
             </Button>
           </div>

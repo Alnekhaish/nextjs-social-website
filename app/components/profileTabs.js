@@ -20,11 +20,12 @@ export default function ProfileTabs({ posts, comments }) {
           </Tabs.List>
 
           <Tabs.Content anchor="tab-1">
-            {posts.map((p) => (
-              <Card.Body key={p._id}>
-                <Post post={p} key={p._id} />
-              </Card.Body>
-            ))}
+            {posts &&
+              posts.map((p) => (
+                <Card.Body key={p._id}>
+                  <Post post={p} key={p._id} />
+                </Card.Body>
+              ))}
           </Tabs.Content>
           <Tabs.Content anchor="tab-2">
             {comments.map((item) => {
