@@ -16,10 +16,13 @@ async function getUserData() {
   const token = cookies().get("token");
   if (token) {
     try {
-      const res = await fetch("http://localhost:8000/users/details", {
-        method: "GET",
-        headers: { Authorization: `bearer ${token.value}` },
-      });
+      const res = await fetch(
+        "https://express-social-website.vercel.app/users/details",
+        {
+          method: "GET",
+          headers: { Authorization: `bearer ${token.value}` },
+        },
+      );
       return res.json();
     } catch (error) {
       console.log(error);

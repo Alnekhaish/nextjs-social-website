@@ -17,7 +17,7 @@ export default function ResetPasswordModal({ open, setOpen }) {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/resetpassword",
+        "https://nextjs-social-website.vercel.app/api/resetpassword",
         {
           username: formData.username,
           password: formData.password,

@@ -17,13 +17,16 @@ export default function SignupModal({ open, setOpen }) {
     setIsSubmitting(true);
     isSubmitted(true);
     try {
-      const response = await axios.post("http://localhost:3000/api/signup", {
-        email: formData.email,
-        username: formData.username,
-        firstname: formData.firstname,
-        lastname: formData.lastname,
-        password: formData.password,
-      });
+      const response = await axios.post(
+        "https://nextjs-social-website.vercel.app/api/signup",
+        {
+          email: formData.email,
+          username: formData.username,
+          firstname: formData.firstname,
+          lastname: formData.lastname,
+          password: formData.password,
+        },
+      );
       if (response.status === 200) {
         setFailed(false);
       }

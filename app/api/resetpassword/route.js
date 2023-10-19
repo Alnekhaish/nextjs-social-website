@@ -7,10 +7,13 @@ export async function POST(request) {
   const password = req.password;
 
   try {
-    const response = await axios.post("http://localhost:8000/resetpassword", {
-      username: username,
-      password: password,
-    });
+    const response = await axios.post(
+      "https://express-social-website.vercel.app/resetpassword",
+      {
+        username: username,
+        password: password,
+      },
+    );
     if (response.status === 200) {
       return NextResponse.json(
         { message: "Success" },
