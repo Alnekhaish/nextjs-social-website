@@ -29,7 +29,7 @@ export default function EditProfileModal({ open, setOpen, user }) {
     setIsSubmitting(true);
     try {
       const response = await axios.put(
-        "http://localhost:8000/users/details",
+        "https://express-social-website.vercel.app/users/details",
         {
           profile: {
             first_name: formData.fname,

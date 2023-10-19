@@ -9,10 +9,13 @@ async function getUserTimeline() {
 
   if (token) {
     try {
-      const res = await fetch("http://localhost:8000/users/timeline", {
-        method: "GET",
-        headers: { Authorization: `bearer ${token.value}` },
-      });
+      const res = await fetch(
+        "https://express-social-website.vercel.app/users/timeline",
+        {
+          method: "GET",
+          headers: { Authorization: `bearer ${token.value}` },
+        },
+      );
       const data = await res.json();
       return data.timeline;
     } catch (error) {

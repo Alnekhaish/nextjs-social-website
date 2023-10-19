@@ -19,7 +19,7 @@ export default function NewPost({ avatar }) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/posts",
+        "https://express-social-website.vercel.app/posts",
         {
           content: e.target["content"].value,
         },
